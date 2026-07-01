@@ -758,6 +758,41 @@
   </div>
 </div>
 
+   <!-- MindVault Project Card -->
+<div class="project-card">
+  <div class="project-header">
+    <h3>MindVault: Multimodal Mental Wellness Monitor</h3>
+    <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+      <div class="skill-tags">
+        <span class="skill-tag">Whisper</span>
+        <span class="skill-tag">librosa</span>
+        <span class="skill-tag">HuggingFace</span>
+        <span class="skill-tag">FastAPI</span>
+        <span class="skill-tag">Docker</span>
+        <span class="skill-tag">Kubernetes</span>
+        <span class="skill-tag">MLflow</span>
+        <span class="skill-tag">Prometheus</span>
+      </div>
+      <a href="https://github.com/songoku4/MindVault" target="_blank" class="btn btn-outline" style="padding: 0.5rem 1.2rem; font-size: 0.85rem; flex-shrink:0;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+        </svg>
+        View on GitHub
+      </a>
+    </div>
+  </div>
+  <div class="project-body">
+    <div class="project-column">
+      <h4>The Objective</h4>
+      <p>Build a passive wellness monitor that listens to <em>how</em> you speak, not just what you say, fusing acoustic voice signals with NLP sentiment to detect mood patterns that self-reported scores miss.</p>
+    </div>
+    <div class="project-column">
+      <h4>The Architecture and Deployment</h4>
+      <p>Daily voice check-ins are transcribed locally via <strong>faster-whisper</strong>, then analysed with <strong>librosa</strong> for pitch, RMS energy, MFCCs, and speech rate. <strong>DistilBERT</strong> runs sentiment classification on the transcript. Both signals are fused into a composite mood score with divergence detection — flagging sessions where voice energy and word sentiment disagree. Every check-in is logged as an <strong>MLflow</strong> experiment run. Real-time <strong>Prometheus</strong> metrics visualised in <strong>Grafana</strong>. Containerised with <strong>Docker</strong>, deployed on <strong>Kubernetes</strong>, CI/CD via <strong>GitHub Actions</strong>. Designed for clinical research pilots.</p>
+    </div>
+  </div>
+</div>
+
     <div class="project-card">
       <div class="project-header">
         <h3>Medical Image Segmentation Pipeline</h3>
