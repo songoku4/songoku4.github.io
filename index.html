@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aaditya Sharma - Portfolio</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='16 18 22 12 16 6'%3E%3C/polyline%3E%3Cpolyline points='8 6 2 12 8 18'%3E%3C/polyline%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Figtree:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  /* LIGHT THEME (DEFAULT) */
+:root {
+    --bg: #FFFDF8;        /* Warm, inviting cream base */
+    --bg2: #F5F2EA;       /* Soft warm sand for secondary backgrounds */
+    --surface: #FFFFFF;   /* Pure White cards */
+    --text-main: #1F1F22; /* Soft Charcoal */
+    --text-muted: #6B6B70;/* Warm Grey */
+    --name-color: #1A365D;/* Deep elegant Navy */
+    --accent: #EAB308;    /* Golden yellow accent */
+    --border: rgba(0,0,0,0.06);
+    --radius: 8px;
+    
+    /* Buttons */
+    --btn-bg: #1F1F22;
+    --btn-text: #FFFFFF;
+    
+    /* Nav */
+    --nav-bg: rgba(255, 253, 248, 0.85);
+    --company-logo-bg: #1F1F22;
+    --company-logo-text: #FFFFFF;
+    --timeline-badge: #F5F2EA;
+    --timeline-badge-text: #5C5850;
+  }
+
+  /* DARK THEME */
+  body.dark-theme {
+    --bg: #0B1120; 
+    --bg2: #1E293B; 
+    --surface: #1E293B;
+    --text-main: #F8FAFC; 
+    --text-muted: #94A3B8; 
+    --name-color: #60A5FA; 
+    --border: rgba(255,255,255,0.1);
+    
+    /* Buttons */
+    --btn-bg: #F8FAFC;
+    --btn-text: #0F172A;
+
+    /* Nav */
+    --nav-bg: rgba(11, 17, 32, 0.85);
+    --company-logo-bg: #F8FAFC;
+    --company-logo-text: #0F172A;
+    --timeline-badge: #334155;
+    --timeline-badge-text: #E2E8F0;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Figtree', sans-serif;
+    background: var(--bg);
+    color: var(--text-main);
+    overflow-x: hidden;
+    font-size: 16px;
+    line-height: 1.7;
+    transition: background-color 0.8s ease, color 0.8s ease;
+  }
+
+  section { position: relative; z-index: 10; }
+
+  /* INITIAL LOADING ANIMATION */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* Fade the navbar in smoothly */
+  nav { animation: fadeIn 1.5s ease forwards; }
+
+  /* Set everything in the left hero section to be invisible at first */
+  .hero-left > * { opacity: 0; }
+
+  /* Stagger the entrance of each text element */
+  .hero-eyebrow { animation: fadeUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.1s forwards; }
+  .hero-greeting { animation: fadeUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards; }
+  .hero-name { animation: fadeUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards; }
+  .hero-title { animation: fadeUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.4s forwards; }
+  .hero-tagline { animation: fadeUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.5s forwards; }
+  .hero-actions { animation: fadeUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.6s forwards; }
+
+  /* Slide the image up last */
+  .hero-image {
+    opacity: 0;
+    animation: fadeUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.5s forwards;
+  }
+
+  /* ─── WEATHER EFFECTS LAYER ─── */
+  .weather-layer {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    pointer-events: none; 
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  /* The New Neutral Glow Effect */
+.sunlight {
+    position: absolute;
+    top: -40vh; right: -20vw;
+    width: 140vw; height: 140vh;
+    /* Soft golden yellow rays */
+    background: radial-gradient(circle at 65% 35%, rgba(250, 218, 71, 0.35) 0%, rgba(250, 204, 21, 0.12) 40%, transparent 75%);
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+  }
+  body:not(.dark-theme) .sunlight {
+    opacity: 1;
+    animation: sunSway 10s infinite alternate ease-in-out;
+  }
+  @keyframes sunSway {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(-3%, 3%) scale(1.05); }
+  }
+
+  /* The Rain Effect */
+  .rain {
+    position: absolute;
+    top: -200px; left: -100px;
+    width: calc(100vw + 200px); height: calc(100vh + 200px);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Crect width='1' height='15' x='20' y='20' fill='rgba(255,255,255,0.15)'/%3E%3Crect width='1.5' height='20' x='80' y='100' fill='rgba(255,255,255,0.25)'/%3E%3Crect width='1' height='10' x='140' y='40' fill='rgba(255,255,255,0.1)'/%3E%3Crect width='2' height='25' x='180' y='160' fill='rgba(255,255,255,0.2)'/%3E%3C/svg%3E");
+    background-size: 250px 250px;
+    opacity: 0;
+    transition: opacity 1s ease;
+  }
+  body.dark-theme .rain {
+    opacity: 1;
+    animation: rainDrop 0.6s linear infinite;
+  }
+  @keyframes rainDrop {
+    0% { background-position: 0 0; }
+    100% { background-position: -40px 250px; } 
+  }
+
+  /* The Lightning Effects */
+  .lightning {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: #FFFFFF;
+    opacity: 0;
+  }
+  body.dark-theme .lightning {
+    animation: flash 12s infinite;
+  }
+  @keyframes flash {
+    0%, 3%, 5%, 7%, 100% { opacity: 0; }
+    4% { opacity: 0.6; } 
+    6% { opacity: 0.9; } 
+  }
+
+  .stat-card, .skill-card, .timeline-container, .timeline-item::before, .timeline-date-badge, .nav-icon-link, .theme-toggle, .btn, .company-logo {
+    transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 5rem;
+    background: var(--nav-bg);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-weight: 800; font-size: 1.1rem; letter-spacing: 0.25em;
+    color: var(--text-main); text-decoration: none; text-transform: uppercase;
+  }
+  .nav-right { display: flex; align-items: center; gap: 2rem; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: var(--text-muted); font-size: 0.75rem;
+    font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text-main); }
+  .nav-divider { width: 1px; height: 24px; background-color: var(--border); }
+  .nav-icons { display: flex; align-items: center; gap: 1.2rem; }
+  .nav-icon-link { color: var(--text-muted); display: flex; align-items: center; justify-content: center; transition: color 0.2s;}
+  .nav-icon-link:hover { color: var(--text-main); }
+  
+  .theme-toggle {
+    width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-muted); cursor: pointer; background: transparent; overflow: hidden;
+  }
+  .theme-toggle:hover { border-color: var(--text-muted); color: var(--text-main); }
+  .theme-toggle svg { pointer-events: none; transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.3s ease; }
+  .theme-toggle.spin svg { transform: rotate(180deg) scale(0.2); opacity: 0; }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh; display: grid; grid-template-columns: 1.2fr 0.8fr;
+    align-items: center; padding: 8rem 5rem 4rem; gap: 2rem; max-width: 1400px; margin: 0 auto;
+  }
+  .hero-eyebrow {
+    font-size: 0.85rem; font-weight: 700; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--text-muted); margin-bottom: 2rem;
+  }
+  .hero-greeting { font-size: 2.8rem; font-weight: 800; color: var(--text-main); line-height: 1; margin-bottom: 0.5rem; }
+  .hero-name {
+    font-family: 'Alex Brush', cursive; font-size: clamp(3.5rem, 6.5vw, 6.5rem);
+    color: var(--name-color); line-height: 1.2; margin-bottom: 1.5rem;
+    padding-right: 1rem; font-weight: 400; white-space: nowrap; transition: color 0.4s ease;
+  }
+  .hero-title { font-size: 1.4rem; font-weight: 700; color: var(--text-main); margin-bottom: 1.2rem; }
+  .hero-tagline { font-size: 1rem; color: var(--text-muted); font-weight: 400; line-height: 1.8; max-width: 550px; margin-bottom: 2.5rem; }
+  .hero-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+
+  /* ─── BUTTONS & MOUSE SPOTLIGHT ─── */
+  .btn {
+    position: relative;
+    overflow: hidden; 
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 0.8rem 1.8rem; border-radius: 100px; font-weight: 600; font-size: 0.9rem;
+    text-decoration: none; cursor: pointer; gap: 8px;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+  }
+  
+  .btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+  }
+
+  .btn::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle 50px at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.25), transparent 100%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+  .btn:hover::after { opacity: 1; }
+
+  .btn-primary { background: var(--btn-bg); color: var(--btn-text); border: 2px solid var(--btn-bg); }
+  body.dark-theme .btn-primary::after {
+    background: radial-gradient(circle 50px at var(--x, 50%) var(--y, 50%), rgba(0,0,0,0.3), transparent 100%);
+  }
+
+  .btn-outline { background: transparent; color: var(--btn-bg); border: 2px solid var(--btn-bg); }
+  .btn-outline::after {
+    background: radial-gradient(circle 50px at var(--x, 50%) var(--y, 50%), rgba(17, 24, 39, 0.1), transparent 100%);
+  }
+  body.dark-theme .btn-outline::after {
+    background: radial-gradient(circle 50px at var(--x, 50%) var(--y, 50%), rgba(255, 255, 255, 0.15), transparent 100%);
+  }
+
+  /* ─── IMAGE ZOOM ─── */
+  .hero-right { display: flex; justify-content: flex-end; align-items: center; }
+  .hero-image {
+    width: 100%; max-width: 450px; aspect-ratio: 1 / 1; border-radius: 50%;
+    object-fit: cover; box-shadow: 0 20px 40px rgba(0,0,0,0.08); border: 8px solid rgba(255,255,255,0.4);
+    transition: border-color 0.4s ease, transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.5s ease;
+  }
+  .hero-image:hover { transform: scale(1.05); box-shadow: 0 30px 60px rgba(0,0,0,0.15); }
+  body.dark-theme .hero-image { border-color: rgba(255,255,255,0.05); }
+
+  /* ─── GENERAL SECTIONS ─── */
+  section:not(#hero) { padding: 6rem 5rem; max-width: 1400px; margin: 0 auto; }
+  .section-eyebrow { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--name-color); margin-bottom: 1rem; transition: color 0.4s ease; }
+  .section-title { font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 800; color: var(--text-main); margin-bottom: 2.5rem; line-height: 1.2; }
+
+  /* ─── ABOUT & STATS ─── */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+  .about-text p { color: var(--text-muted); font-size: 1.05rem; margin-bottom: 1.5rem; }
+  .about-text strong { color: var(--text-main); font-weight: 700; }
+  .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .stat-card { background: var(--surface); padding: 1.5rem; border-radius: var(--radius); border: 1px solid var(--border); }
+  .stat-num { font-size: 2.5rem; font-weight: 800; color: var(--name-color); line-height: 1; margin-bottom: 0.5rem; transition: color 0.4s ease; }
+  .stat-label { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
+
+/* ─── NEW SKILLS GRID ─── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  .skill-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .skill-card:hover {
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  }
+  .skill-card-name {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--name-color);
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .skill-card p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+ .skill-tags { 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 8px; 
+    margin-top: 10px;
+  }
+  .skill-tag { 
+    font-size: 0.8rem; /* Slightly smaller text for longer phrases */
+    font-weight: 500; 
+    color: var(--text-muted); 
+    background: var(--bg2); 
+    padding: 6px 12px; 
+    border-radius: 6px; 
+    border: 1px solid var(--border);
+    white-space: nowrap; /* Keeps tag text on one line */
+  }
+  @media (max-width: 900px) {
+    .skills-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ─── TIMELINE EXPERIENCE ─── */
+  .timeline-container { background: var(--surface); border-radius: var(--radius); padding: 3rem; border: 1px solid var(--border); }
+  .timeline-header { display: flex; align-items: center; gap: 1.2rem; margin-bottom: 3.5rem; }
+  .company-logo { width: 64px; height: 64px; background: var(--company-logo-bg); border-radius: 16px; display: flex; align-items: center; justify-content: center; color: var(--company-logo-text); flex-shrink: 0; }
+  .company-info { display: flex; flex-direction: column; gap: 0.2rem; }
+  .company-name { font-size: 1.6rem; font-weight: 800; color: var(--text-main); line-height: 1.1; margin: 0; }
+  .company-sub { font-size: 0.95rem; color: var(--text-muted); font-weight: 500; }
+  .timeline-body { position: relative; padding-left: 2.5rem; border-left: 2px solid var(--border); }
+  .timeline-item { position: relative; margin-bottom: 3rem; }
+  .timeline-item:last-child { margin-bottom: 0; }
+  .timeline-item::before { content: ''; position: absolute; left: -3.05rem; top: 0.2rem; width: 18px; height: 18px; background: var(--surface); border: 4px solid var(--accent); border-radius: 50%; }
+  .timeline-item-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
+  .timeline-role { font-size: 1.3rem; font-weight: 800; color: var(--text-main); }
+  .timeline-date-badge { background: var(--timeline-badge); color: var(--timeline-badge-text); padding: 0.4rem 1.2rem; border-radius: 100px; font-size: 0.85rem; font-weight: 700; }
+  .timeline-list { list-style: none; display: flex; flex-direction: column; gap: 1.2rem; }
+  .timeline-list li { position: relative; padding-left: 1.5rem; color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; }
+  .timeline-list li::before { content: '•'; position: absolute; left: 0; color: var(--text-muted); font-size: 1.2rem; line-height: 1.4; }
+  .timeline-list li strong { color: var(--text-main); font-weight: 600; }
+
+  /* ─── PROJECTS ─── */
+  .project-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 3rem; margin-bottom: 2rem; transition: box-shadow 0.3s ease, transform 0.3s ease, background-color 0.4s ease, border-color 0.4s ease;
+  }
+  .project-card:hover { box-shadow: 0 20px 40px rgba(0,0,0,0.05); transform: translateY(-4px); }
+  .project-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; flex-wrap: wrap; gap: 1rem; }
+  .project-header h3 { font-size: 1.5rem; font-weight: 800; color: var(--name-color); margin: 0; transition: color 0.4s ease; }
+  .project-body { display: grid; grid-template-columns: 1fr 1.5fr; gap: 3rem; }
+  .project-column h4 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-main); margin-bottom: 1rem; font-weight: 700; transition: color 0.4s ease; }
+  .project-column p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.8; transition: color 0.4s ease; }
+  .project-column p strong { color: var(--text-main); transition: color 0.4s ease;}
+
+  /* ─── TESTIMONIALS CAROUSEL ─── */
+  .testimonial-wrapper {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 3rem;
+    position: relative;
+    min-height: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: background-color 0.4s ease, border-color 0.4s ease;
+  }
+  .testimonial-slide {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.6s ease-in-out;
+  }
+  .testimonial-slide.active {
+    display: block;
+    opacity: 1;
+  }
+  .quote-mark {
+    position: absolute;
+    top: 2rem;
+    right: 2.5rem;
+    color: var(--accent);
+    opacity: 0.15;
+    transition: color 0.4s ease;
+  }
+  .testimonial-text {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 2;
+    transition: color 0.4s ease;
+  }
+  .testimonial-author {
+    border-top: 1px solid var(--border);
+    padding-top: 1.5rem;
+    transition: border-color 0.4s ease;
+  }
+  .testimonial-author h4 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 0.2rem;
+    transition: color 0.4s ease;
+  }
+  .testimonial-author span {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    transition: color 0.4s ease;
+  }
+  .slider-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .slider-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    transition: color 0.3s ease;
+  }
+  .slider-btn:hover { color: var(--accent); }
+  .slider-dots {
+    display: flex;
+    gap: 8px;
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--border);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .dot.active {
+    background: var(--accent);
+    width: 24px;
+    border-radius: 4px;
+  }
+  
+  /* ─── REVEAL ANIMATION ─── */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ─── FOOTER ─── */
+  footer { text-align: center; padding: 3rem; color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid var(--border); transition: color 0.4s ease, border-color 0.4s ease; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    nav { padding: 1.5rem; }
+    .nav-links, .nav-divider { display: none; }
+    #hero { grid-template-columns: 1fr; text-align: center; padding: 8rem 1.5rem 3rem; gap: 2rem; }
+    .hero-right { justify-content: center; grid-row: 1; }
+    .hero-actions { justify-content: center; }
+    .hero-tagline { margin: 0 auto 2.5rem; }
+    section:not(#hero) { padding: 4rem 1.5rem; }
+    .about-grid, .timeline-item-header { flex-direction: column; grid-template-columns: 1fr; gap: 1rem; }
+    .project-body { grid-template-columns: 1fr; gap: 1.5rem; }
+    .project-card, .timeline-container, .testimonial-wrapper { padding: 2rem 1.5rem; }
+    .timeline-header { flex-direction: column; text-align: center; align-items: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="weather-layer">
+  <div class="sunlight"></div>
+  <div class="rain"></div>
+  <div class="lightning"></div>
+</div>
+
+<nav>
+  <a href="#hero" class="nav-logo">Aaditya.</a>
+  
+  <div class="nav-right">
+<ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#mentorship">Mentorship</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#testimonials">Testimonials</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    
+    <div class="nav-divider"></div>
+    
+    <div class="nav-icons">
+      <a href="https://github.com/songoku4" target="_blank" class="nav-icon-link" aria-label="GitHub">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+        </svg>
+      </a>
+      <a href="https://www.linkedin.com/in/aaditya-sharma-88a54b160/" target="_blank" class="nav-icon-link" aria-label="LinkedIn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+          <rect x="2" y="9" width="4" height="12"></rect>
+          <circle cx="4" cy="4" r="2"></circle>
+        </svg>
+      </a>
+      <button class="theme-toggle" aria-label="Toggle Light/Dark Mode" id="themeToggleBtn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">AVAILABLE FOR HIRE @ MELBOURNE, VIC</div>
+    <div class="hero-greeting">Hi, I'm</div>
+    <h1 class="hero-name">Aaditya Sharma</h1>
+    <h2 class="hero-title">I deploy and automate intelligent infrastructure.</h2>
+    <p class="hero-tagline">
+      Specializing in system observability, high-performance microservices, and AI-driven telemetry. Focused on architecting scalable backend systems, driving zero-downtime deployments, and elevating developer infrastructure.
+    </p>
+    <div class="hero-actions">
+      <a href="Aaditya_Resume_Latest.pdf" class="btn btn-primary" download>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+        Download CV
+      </a>
+      <a href="#contact" class="btn btn-outline">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+          <polyline points="22,6 12,13 2,6"></polyline>
+        </svg>
+        Contact Me
+      </a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img class="hero-image" src="beach.png" alt="Aaditya Sharma">
+  </div>
+</section>
+
+<section id="about">
+  <div class="reveal">
+    <p class="section-eyebrow">About Me</p>
+    <h2 class="section-title">Bridging the gap between engineering and production.</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I am a Senior DevOps and MLOps Engineer with <strong>over two years of production experience</strong> at Comviva (a Tech Mahindra company). My expertise heavily revolves around deployments, CI/CD pipelines, Terraform, and database management.</p>
+        <p>I build the automated systems that reliably take machine learning models out of the lab and put them into the real world. I sit right between the data science guys and the production engineering team to ensure deployments are fast, seamless, and do not break things.</p>
+        <p>Right now, I am upgrading my skills with a <strong>Master of IT (AI Specialisation)</strong> at the University of Melbourne and am available for part-time, casual, or contract roles.</p>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-num">40%</div>
+          <div class="stat-label">Reduction in deployment time via CI/CD</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">60%</div>
+          <div class="stat-label">Less manual ML deployment effort</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">$2k</div>
+          <div class="stat-label">Monthly AWS cloud cost savings</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">15h</div>
+          <div class="stat-label">Saved per week through automation</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="reveal">
+    <p class="section-eyebrow">Technical Expertise</p>
+    <h2 class="section-title">Core Competencies</h2>
+    <div class="skills-grid">
+      
+      <div class="skill-card">
+        <span class="skill-card-name">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+          Cloud Platforms
+        </span>
+        <div class="skill-tags">
+          <span class="skill-tag">AWS (EC2, S3, Lambda, RDS, IAM, Route53, SageMaker)</span>
+          <span class="skill-tag">Azure (VMs, Functions)</span>
+          <span class="skill-tag">Terraform</span>
+          <span class="skill-tag">CloudFormation</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <span class="skill-card-name">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/></svg>
+          AI & MLOps
+        </span>
+        <div class="skill-tags">
+          <span class="skill-tag">MLflow</span>
+          <span class="skill-tag">SageMaker Pipelines</span>
+          <span class="skill-tag">Airflow</span>
+          <span class="skill-tag">MLflow Model Registry</span>
+          <span class="skill-tag">Inference Monitoring</span>
+          <span class="skill-tag">A/B Deployment</span>
+          <span class="skill-tag">Data Drift Detection</span>
+          <span class="skill-tag">TensorFlow & Keras</span>
+          <span class="skill-tag">Pandas & NumPy</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <span class="skill-card-name">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          DevOps & Observability
+        </span>
+        <div class="skill-tags">
+          <span class="skill-tag">Docker</span>
+          <span class="skill-tag">Kubernetes (EKS)</span>
+          <span class="skill-tag">Helm</span>
+          <span class="skill-tag">Jenkins</span>
+          <span class="skill-tag">CI/CD for ML pipelines</span>
+          <span class="skill-tag">GitHub Actions</span>
+          <span class="skill-tag">Git & GitOps</span>
+          <span class="skill-tag">Prometheus & Grafana</span>
+          <span class="skill-tag">ELK Stack</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <span class="skill-card-name">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+          Scripting & Databases
+        </span>
+        <div class="skill-tags">
+          <span class="skill-tag">Python (Advanced)</span>
+          <span class="skill-tag">Bash</span>
+          <span class="skill-tag">MySQL</span>
+          <span class="skill-tag">PostgreSQL</span>
+          <span class="skill-tag">MongoDB</span>
+          <span class="skill-tag">Redis</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="reveal">
+    <p class="section-eyebrow">Career History</p>
+    <h2 class="section-title">Professional Experience</h2>
+    
+    <div class="timeline-container">
+      <div class="timeline-header">
+        <div class="company-logo" style="background-color: var(--surface); border: 1px solid var(--border); overflow: hidden; padding: 6px; display: flex; align-items: center; justify-content: center;">
+          <img src="comviva.png" alt="Comviva Logo" style="width: 100%; height: 100%; object-fit: contain;">
+        </div>
+        <div class="company-info">
+          <h3 class="company-name">Comviva</h3>
+          <span class="company-sub">Tech Mahindra Company • Jul 2023 - Sept 2025</span>
+        </div>
+      </div>
+
+      <div class="timeline-body">
+        <div class="timeline-item">
+          <div class="timeline-item-header">
+            <div class="timeline-role">Senior DevOps Engineer</div>
+            <div class="timeline-date-badge">Jul 2023 - Sept 2025</div>
+          </div>
+<ul class="timeline-list">
+            <li>Built and maintained <strong>CI/CD pipelines using Jenkins and GitHub Actions</strong>, reducing deployment time by 40% and enabling automated rollouts for both application and ML model releases.</li>
+            <li>Integrated <strong>MLflow</strong> into the deployment pipeline for ML model versioning, experiment tracking, and artefact management, supporting data science teams in promoting models from staging to production.</li>
+            <li>Containerised ML inference services using <strong>Docker</strong> and deployed them on <strong>Kubernetes (EKS)</strong>, implementing auto-scaling policies and resource quotas for GPU and CPU workloads.</li>
+            <li>Configured <strong>SageMaker Pipelines</strong> for batch inference jobs, reducing manual ML deployment effort by 60% and standardising the model promotion workflow across environments.</li>
+            <li>Automated operational workflows using <strong>Python scripts and AWS Lambda</strong>, saving over 15 hours per week across the team.</li>
+            <li>Provisioned infrastructure using <strong>Terraform</strong> across development, staging, and production environments, maintaining reusable modules and enforcing infrastructure-as-code best practices.</li>
+            <li>Designed <strong>Prometheus and Grafana dashboards</strong> for real-time model performance monitoring, including latency, throughput, and data drift alerting for production inference endpoints.</li>
+            <li>Implemented <strong>ELK Stack</strong> centralised logging for diagnosing model serving errors and pipeline failures in production, significantly reducing mean time to resolution.</li>
+            <li>Deployed and maintained cloud infrastructure on <strong>AWS (EC2, S3, Lambda, RDS, and SageMaker)</strong>; implemented cost optimisation strategies that reduced monthly spend by approximately $2,000.</li>
+            <li>Collaborated closely with development and data science teams to optimise system performance, reduce model inference latency, and improve pipeline reliability.</li>
+            <li>Mentored and onboarded interns and new team members, reducing ramp-up time by 30%, and conducted knowledge transfer sessions to standardise DevOps and MLOps practices across the organisation.</li>
+            <li style="color: var(--name-color); font-weight: 500;">
+              <strong>🏆 ACE Certificates:</strong> Received multiple "Appreciation for Commitment and Effort" awards from senior leadership for outstanding delivery, initiative, and team contribution.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="reveal">
+    <p class="section-eyebrow">Case Studies</p>
+    <h2 class="section-title">Engineering Projects</h2>
+
+   <div class="project-card">
+  <div class="project-header">
+    <h3>RAG-Ops: Document Intelligence Platform</h3>
+    <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+      <div class="skill-tags">
+        <span class="skill-tag">LangChain</span>
+        <span class="skill-tag">FastAPI</span>
+        <span class="skill-tag">ChromaDB</span>
+        <span class="skill-tag">Docker</span>
+        <span class="skill-tag">Kubernetes</span>
+        <span class="skill-tag">MLFlow</span>
+        <span class="skill-tag">Prometheus</span>
+        <span class="skill-tag">GitHub Actions</span>
+      </div>
+      <a href="https://github.com/songoku4/RagOps" target="_blank" class="btn btn-outline" style="padding: 0.5rem 1.2rem; font-size: 0.85rem; flex-shrink:0;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+        </svg>
+        View on GitHub
+      </a>
+    </div>
+  </div>
+  <div class="project-body">
+    <div class="project-column">
+      <h4>The Objective</h4>
+      <p>Build a production-grade RAG managed system that lets anyone upload a PDF and ask questions about it, backed by a complete MLOps lifecycle.</p>
+    </div>
+    <div class="project-column">
+      <h4>The Architecture & Deployment</h4>
+      <p>Built a <strong>LangChain + ChromaDB</strong> RAG pipeline served via <strong>FastAPI</strong>, containerised with <strong>Docker</strong>, and deployed on <strong>Kubernetes</strong> with 2 replicas and readiness probes. Every query is logged as an <strong>MLflow</strong> experiment run tracking latency and retrieval metrics. Real-time observability via <strong>Prometheus and Grafana</strong>. Automated testing, linting, and Docker build on every push via <strong>GitHub Actions CI/CD</strong>.</p>
+    </div>
+  </div>
+</div>
+
+    <div class="project-card">
+      <div class="project-header">
+        <h3>Medical Image Segmentation Pipeline</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">TensorFlow</span>
+          <span class="skill-tag">Keras</span>
+          <span class="skill-tag">Docker</span>
+          <span class="skill-tag">REST API</span>
+        </div>
+      </div>
+      <div class="project-body">
+        <div class="project-column">
+          <h4>The Objective</h4>
+          <p>Develop a Convolutional Neural Network (CNN) to automate the segmentation of medical imagery, reducing manual diagnostic workload and ensuring high accuracy.</p>
+        </div>
+        <div class="project-column">
+          <h4>The Architecture & Deployment</h4>
+          <p>Built and trained the core segmentation models utilizing <strong>TensorFlow and Keras</strong>. To ensure the model could be reliably deployed across environments without dependency conflicts, I containerised the entire inference service using <strong>Docker</strong> and exposed the model's capabilities via lightweight <strong>REST API endpoints</strong>.</p>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</section>
+
+<section id="mentorship">
+  <div class="reveal">
+    <p class="section-eyebrow">Leadership & Mentorship</p>
+    <h2 class="section-title">Elevating Engineering Standards</h2>
+
+    <div class="project-card" style="padding: 2.5rem; display: flex; flex-direction: column; gap: 1.5rem;">
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <div style="background: var(--text-main); color: var(--surface); padding: 12px; border-radius: 12px; display: flex; align-items: center; justify-content: center; height: 52px; width: 52px; flex-shrink: 0;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+            <path d="M16 3.128a4 4 0 0 1 0 7.744"></path>
+            <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+          </svg>
+        </div>
+        <div>
+          <h3 style="font-size: 1.4rem; font-weight: 800; color: var(--name-color); margin: 0;">Engineering Mentor</h3>
+          <span style="font-size: 0.95rem; color: var(--accent); font-weight: 600;">Comviva Technical Leadership</span>
+        </div>
+      </div>
+
+      <ul class="timeline-list" style="padding-left: 0; gap: 1rem;">
+        <li style="padding-left: 1.5rem; list-style-type: none;">
+          <span style="position: absolute; left: 0; color: var(--accent); font-weight: bold;">•</span>
+          <strong>Mentorship & Onboarding:</strong> Actively mentored and onboarded interns and new team members, reducing the team ramp-up time by 30%.
+        </li>
+        <li style="padding-left: 1.5rem; list-style-type: none;">
+          <span style="position: absolute; left: 0; color: var(--accent); font-weight: bold;">•</span>
+          <strong>Knowledge Transfer:</strong> Conducted regular knowledge transfer sessions and technical design reviews to standardize DevOps and MLOps practices across the broader organization.
+        </li>
+        <li style="padding-left: 1.5rem; list-style-type: none;">
+          <span style="position: absolute; left: 0; color: var(--accent); font-weight: bold;">•</span>
+          <strong>Documentation & SOPs:</strong> Authored and maintained highly detailed, step-by-step Standard Operating Procedures (SOPs) and Methods of Procedure (MOPs). These documents were established as the official baseline in the company repository, significantly reducing deployment errors and accelerating incident resolution across all engineering teams.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section> 
+ 
+<section id="education">
+  <div class="reveal">
+    <p class="section-eyebrow">Academic Background</p>
+    <h2 class="section-title">Education & Qualifications</h2>
+    
+    <div class="skills-grid">
+      
+<div class="skill-card">
+        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 1rem;">
+          <div style="width: 64px; height: 64px; flex-shrink: 0; background-color: var(--surface); border-radius: 8px; border: 1px solid var(--border); overflow: hidden; display: flex; align-items: center; justify-content: center;">
+            <img src="unimelb.jpg" alt="University of Melbourne" style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+          <span class="skill-card-name" style="margin-bottom: 0; font-size: 1.4rem;">Master of Information Technology</span>
+        </div>
+        <span style="display: block; font-weight: 700; margin-bottom: 1rem; font-size: 1.05rem;">University of Melbourne <span style="color: var(--text-muted); font-weight: 500;">• Feb 2026 - Dec 2027 (Projected)</span></span>
+        <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; margin: 0;">
+          <strong>Specialisation: Artificial Intelligence</strong><br>
+          Coursework focus: Machine Learning, Deep Learning, Cloud Computing, and AI Ethics.
+        </p>
+      </div>
+
+     
+
+<div class="skill-card">
+        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 1rem;">
+          <div style="width: 64px; height: 64px; flex-shrink: 0; background-color: #FFFFFF; border-radius: 8px; border: 1px solid var(--border); overflow: hidden; display: flex; align-items: center; justify-content: center;">
+            <img src="muj.jpg" alt="Manipal University Jaipur" style="width: 100%; height: 100%; object-fit: cover; transform: scale(1.6);">
+          </div>
+          <span class="skill-card-name" style="margin-bottom: 0; font-size: 1.4rem;">Bachelor of Technology</span>
+        </div>
+        <span style="display: block; font-weight: 700; margin-bottom: 1rem; font-size: 1.05rem;">Manipal University Jaipur <span style="color: var(--text-muted); font-weight: 500;">• 2019 - 2023</span></span>
+        <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; margin: 0;">
+          <strong>Major: Information Technology</strong><br>
+          Graduated with 8.74/10 GPA.
+        </p>
+        <div style="margin-top: 1.2rem; display: inline-flex; align-items: center; gap: 8px; background: rgba(59, 130, 246, 0.1); color: var(--accent); padding: 0.5rem 1rem; border-radius: 100px; font-size: 0.85rem; font-weight: 700; border: 1px solid rgba(59, 130, 246, 0.2);">
+          🏆 Dean's List for Academic Excellence (Highest GPA, 7th Semester)
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="testimonials">
+  <div class="reveal">
+    <p class="section-eyebrow">Recommendations</p>
+    <h2 class="section-title">What People Say</h2>
+
+    <div class="testimonial-wrapper">
+      <svg class="quote-mark" width="64" height="64" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M4.583 17.321C3.553 16.227 3 15 3 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179zm10 0C13.553 16.227 13 15 13 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179z"></path>
+      </svg>
+
+      <div class="testimonial-slide active">
+        <p class="testimonial-text">"I had the pleasure of working with Aaditya when I was working at Comviva. He designed and shipped sophisticated automation that reduced deployment time by 40% and enabled zero-downtime CI/CD Setups and migrations across major customers like Totsco and Airtel. Aaditya's deep technical expertise and innovative problem-solving enabled him to proactively eliminate single points of failure such as automating critical maintenance workflows, improving overall system reliability and team stability. He regularly mentored junior engineers, interns and shared knowledge and raised the team's technical bar. His continuous strive to learn, improve, and adapt new technologies makes him a standout contributor. Professional, collaborative, and deeply dependable."</p>
+        <div class="testimonial-author">
+         <h4><a href="https://www.linkedin.com/in/vivek-sharma-396971166/" target="_blank" style="color:var(--text-main); text-decoration:none;">Vivek Sharma</a></h4>
+          <span>DevOps Lead at Optum (Former Cloud Architect & Team Lead at Comviva)</span>
+        </div>
+      </div>
+
+      <div class="testimonial-slide">
+        <p class="testimonial-text">"I had the pleasure of working closely with Aaditya, and I can confidently say he is one of the most talented and driven DevOps Engineers I've come across. His technical expertise, ability to learn things quickly and efficiently combined with his ability to think strategically and deliver impactful solutions, truly sets him apart. What stands out most about Aaditya is his ability to take ownership of complex problems, his attention to detail, and his unwavering commitment to delivering high-quality results. He is also an excellent collaborator who brings energy and positivity to any team he's part of. I highly recommend Aaditya for any role that demands technical depth, creative problem-solving, and a strong sense of ownership."</p>
+        <div class="testimonial-author">
+          <h4><a href="https://www.linkedin.com/in/vivek-kumar-mishra-2b876a1a4/" target="_blank" style="color:var(--text-main); text-decoration:none;">Vivek Kumar Mishra</a></h4>
+          <span>Tech Lead at Comviva</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="slider-controls">
+      <button class="slider-btn" id="prevSlide" aria-label="Previous">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>
+      </button>
+      <div class="slider-dots" id="sliderDots">
+        <div class="dot active" data-index="0"></div>
+        <div class="dot" data-index="1"></div>
+      </div>
+      <button class="slider-btn" id="nextSlide" aria-label="Next">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg>
+      </button>
+    </div>
+
+  </div>
+</section>
+
+<section id="contact">
+  <div class="reveal" style="text-align: center; padding: 5rem 2rem; background: transparent; border: 1px solid var(--border); border-radius: var(--radius);">
+    <h2 class="section-title" style="margin-bottom: 1rem;">Let's build something scalable.</h2>
+    <p style="color: var(--text-muted); margin-bottom: 2rem; max-width: 500px; margin-left: auto; margin-right: auto;">
+      Currently looking for part-time, casual, or contract roles in Melbourne. If you need help with your pipelines, deployments, or cloud infrastructure, let's chat.
+    </p>
+    <div class="hero-actions" style="justify-content: center;">
+      <a href="mailto:aaditya4aug@gmail.com" class="btn btn-primary">Email Me</a>
+      <a href="https://www.linkedin.com/in/aaditya-sharma-88a54b160/" target="_blank" class="btn btn-outline">LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Aaditya Sharma. Built in Melbourne, VIC.</p>
+</footer>
+
+<script>
+  // Reveal animations
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Button Mouse-Tracking Spotlight Effect
+  document.querySelectorAll('.btn').forEach(btn => {
+    btn.addEventListener('mousemove', e => {
+      const rect = btn.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      btn.style.setProperty('--x', `${x}px`);
+      btn.style.setProperty('--y', `${y}px`);
+    });
+  });
+
+  // Testimonial Slider Logic
+// Testimonial Slider Logic
+  const slides = document.querySelectorAll('.testimonial-slide');
+  const dots = document.querySelectorAll('.dot');
+  let currentSlide = 0;
+  let slideInterval; // Stores the auto-play timer
+
+  function showSlide(index) {
+    slides.forEach(slide => slide.classList.remove('active'));
+    dots.forEach(dot => dot.classList.remove('active'));
+    
+    slides[index].classList.add('active');
+    dots[index].classList.add('active');
+    currentSlide = index;
+  }
+
+  function goToNextSlide() {
+    let next = (currentSlide + 1) % slides.length;
+    showSlide(next);
+  }
+
+  function goToPrevSlide() {
+    let prev = (currentSlide - 1 + slides.length) % slides.length;
+    showSlide(prev);
+  }
+
+  // 10-second auto-slide (10000 milliseconds)
+  function startAutoSlide() {
+    slideInterval = setInterval(goToNextSlide, 10000);
+  }
+
+  // Resets the timer if the user manually clicks, preventing double-jumps
+  function resetAutoSlide() {
+    clearInterval(slideInterval);
+    startAutoSlide();
+  }
+
+  // Manual Controls
+  document.getElementById('nextSlide').addEventListener('click', () => {
+    goToNextSlide();
+    resetAutoSlide();
+  });
+
+  document.getElementById('prevSlide').addEventListener('click', () => {
+    goToPrevSlide();
+    resetAutoSlide();
+  });
+
+  dots.forEach(dot => {
+    dot.addEventListener('click', (e) => {
+      showSlide(parseInt(e.target.dataset.index));
+      resetAutoSlide();
+    });
+  });
+
+  // Start the timer when the page loads
+  startAutoSlide();
+
+  // Dark Mode Toggle Logic
+  const themeToggleBtn = document.getElementById('themeToggleBtn');
+  const body = document.body;
+
+  const moonSVG = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;
+  const sunSVG = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;
+
+  if (localStorage.getItem('theme') === 'dark') {
+    body.classList.add('dark-theme');
+    themeToggleBtn.innerHTML = sunSVG;
+  }
+
+  themeToggleBtn.addEventListener('click', () => {
+    themeToggleBtn.classList.add('spin');
+
+    setTimeout(() => {
+      body.classList.toggle('dark-theme');
+      
+      if (body.classList.contains('dark-theme')) {
+        localStorage.setItem('theme', 'dark');
+        themeToggleBtn.innerHTML = sunSVG;
+      } else {
+        localStorage.setItem('theme', 'light');
+        themeToggleBtn.innerHTML = moonSVG;
+      }
+      
+      themeToggleBtn.classList.remove('spin');
+    }, 250); 
+  });
+</script>
+
+</body>
+</html>
