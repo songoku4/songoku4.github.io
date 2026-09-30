@@ -469,6 +469,131 @@
   .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
   .reveal.visible { opacity: 1; transform: none; }
 
+  /* ─── MUSIC ─── */
+  .music-intro {
+    max-width: 640px; color: var(--text-muted);
+    font-size: 1.05rem; margin-bottom: 3.5rem;
+  }
+  .music-intro strong { color: var(--text-main); font-weight: 700; }
+
+  .credentials {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    margin-bottom: 3.5rem; transition: border-color 0.4s ease;
+  }
+  .credential {
+    padding: 1.9rem 2rem 1.9rem 0; position: relative;
+    transition: opacity .7s ease var(--d, 0s),
+                transform .7s cubic-bezier(.22,1,.36,1) var(--d, 0s);
+  }
+  /* Entry state is applied by script, so the content still shows without JS */
+  .js-anim .credential { opacity: 0; transform: translateY(16px); }
+  .js-anim .credential.in { opacity: 1; transform: none; }
+  .credential + .credential { padding-left: 2rem; }
+  .credential + .credential::before {
+    content: ''; position: absolute; left: 0; top: 1.9rem; bottom: 1.9rem;
+    width: 1px; background: var(--border); transition: background-color 0.4s ease;
+  }
+  .credential-eyebrow {
+    display: flex; align-items: center; gap: 7px;
+    font-size: .68rem; letter-spacing: .14em; text-transform: uppercase;
+    font-weight: 800; color: var(--accent); margin-bottom: .7rem;
+  }
+  .credential-eyebrow::before {
+    content: ''; width: 5px; height: 5px; border-radius: 50%;
+    background: var(--accent); flex-shrink: 0;
+  }
+  .credential-title {
+    font-size: 1.1rem; font-weight: 800; color: var(--text-main);
+    line-height: 1.35; margin-bottom: .3rem; transition: color 0.4s ease;
+  }
+  .credential-sub { font-size: .88rem; color: var(--text-muted); line-height: 1.5; }
+
+  .photo-grid { display: grid; gap: 1rem; }
+  .photo-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+
+  .photo {
+    position: relative; overflow: hidden; border-radius: var(--radius);
+    background: var(--bg2); cursor: zoom-in; border: none; padding: 0;
+    display: block; width: 100%; text-align: left;
+    transition: clip-path 1.05s cubic-bezier(.22,1,.36,1) var(--d, 0s);
+  }
+  .js-anim .photo { clip-path: inset(0 0 100% 0); }
+  .js-anim .photo.in { clip-path: inset(0 0 0 0); }
+  .photo::after {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(to top, rgba(10,8,6,.80) 0%, rgba(10,8,6,.26) 34%, transparent 62%);
+    opacity: 0; transition: opacity .45s ease;
+  }
+  .photo img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    transition: transform 1.3s cubic-bezier(.22,1,.36,1) var(--d, 0s);
+  }
+  .js-anim .photo img { transform: scale(1.14); }
+  .js-anim .photo.in img { transform: scale(1); }
+  .photo:hover::after, .photo:focus-visible::after { opacity: 1; }
+  .photo:hover img, .photo:focus-visible img {
+    transform: scale(1.055);
+    transition: transform .8s cubic-bezier(.22,1,.36,1) 0s;
+  }
+  .photo:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  .photo-hero { aspect-ratio: 16 / 9; }
+  .photo-row .photo { aspect-ratio: 3 / 4; }
+
+  .photo-caption {
+    position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
+    padding: 1.4rem 1.5rem; pointer-events: none;
+    opacity: 0; transform: translateY(10px);
+    transition: opacity .45s ease, transform .45s cubic-bezier(.22,1,.36,1);
+  }
+  .photo:hover .photo-caption, .photo:focus-visible .photo-caption { opacity: 1; transform: none; }
+  .photo-caption b { display: block; color: #fff; font-size: .98rem; font-weight: 700; margin-bottom: .15rem; }
+  .photo-caption span { color: rgba(255,255,255,.72); font-size: .82rem; }
+
+  /* ─── LIGHTBOX ─── */
+  .lightbox {
+    position: fixed; inset: 0; z-index: 200;
+    display: flex; align-items: center; justify-content: center;
+    padding: 5rem; background: rgba(8,6,4,.93);
+    backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+    opacity: 0; visibility: hidden;
+    transition: opacity .4s ease, visibility .4s;
+  }
+  .lightbox.open { opacity: 1; visibility: visible; }
+  .lightbox figure {
+    margin: 0; max-width: 100%; display: flex;
+    flex-direction: column; align-items: center; gap: 1.3rem;
+  }
+  .lightbox img {
+    max-width: 100%; max-height: 74vh; object-fit: contain;
+    border-radius: var(--radius);
+    transform: scale(.96); opacity: 0;
+    transition: transform .5s cubic-bezier(.22,1,.36,1), opacity .45s ease;
+  }
+  .lightbox.open img { transform: none; opacity: 1; }
+  .lb-caption { text-align: center; color: rgba(255,255,255,.7); font-size: .88rem; }
+  .lb-caption b { display: block; color: #fff; font-size: 1.05rem; font-weight: 700; margin-bottom: .25rem; }
+  .lb-btn {
+    position: absolute; width: 46px; height: 46px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.22); background: rgba(255,255,255,.06);
+    color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background .25s ease, border-color .25s ease, transform .25s ease;
+  }
+  .lb-btn:hover { background: rgba(255,255,255,.15); border-color: rgba(255,255,255,.45); }
+  .lb-prev, .lb-next { top: 50%; transform: translateY(-50%); }
+  .lb-prev:hover, .lb-next:hover { transform: translateY(-50%) scale(1.06); }
+  .lb-prev { left: 1.75rem; }
+  .lb-next { right: 1.75rem; }
+  .lb-close { top: 1.75rem; right: 1.75rem; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .photo, .photo img, .credential, .lightbox, .lightbox img { transition-duration: .01ms !important; }
+    .js-anim .photo { clip-path: none; }
+    .js-anim .photo img, .photo:hover img { transform: none; }
+    .js-anim .credential { opacity: 1; transform: none; }
+  }
+
   /* ─── FOOTER ─── */
   footer { text-align: center; padding: 3rem; color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid var(--border); transition: color 0.4s ease, border-color 0.4s ease; }
 
@@ -485,6 +610,20 @@
     .project-body { grid-template-columns: 1fr; gap: 1.5rem; }
     .project-card, .timeline-container, .testimonial-wrapper { padding: 2rem 1.5rem; }
     .timeline-header { flex-direction: column; text-align: center; align-items: center; }
+    .credentials { grid-template-columns: 1fr; }
+    .credential { padding: 1.5rem 0; }
+    .credential + .credential { padding-left: 0; border-top: 1px solid var(--border); }
+    .credential + .credential::before { display: none; }
+    .lightbox { padding: 4.5rem 1rem; }
+    .lb-prev { left: .6rem; }
+    .lb-next { right: .6rem; }
+    .lb-close { top: 1rem; right: 1rem; }
+  }
+
+  @media (max-width: 640px) {
+    /* Stack, but keep the 3:4 frame — a landscape crop decapitates the
+       portrait shots at this width. */
+    .photo-row { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -507,6 +646,7 @@
         <li><a href="#projects">Projects</a></li>
         <li><a href="#mentorship">Mentorship</a></li>
         <li><a href="#education">Education</a></li>
+        <li><a href="#music">Music</a></li>
         <li><a href="#testimonials">Testimonials</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
@@ -723,7 +863,7 @@
         <div class="timeline-item">
           <div class="timeline-item-header">
             <div class="timeline-role">Device Configuration Technician</div>
-            <div class="timeline-date-badge">Jul 2026 - Sep 2026</div>
+            <div class="timeline-date-badge">Jul 2026 - Aug 2026</div>
           </div>
           <ul class="timeline-list">
             <li>Configured and commissioned <strong>personal duress and lone-worker safety devices</strong> ahead of client deployment, working through detailed technical procedures with a high standard of accuracy.</li>
@@ -960,6 +1100,60 @@
   </div>
 </section>
 
+<section id="music">
+  <div class="reveal">
+    <p class="section-eyebrow">Beyond Engineering</p>
+    <h2 class="section-title">I have been playing tabla longer than I have been writing code.</h2>
+    <p class="music-intro">
+      Long before any of the above, I was training in Hindustani classical music &mdash; <strong>tabla and vocal</strong>, through years of graded exams up to Senior Diploma. There was a stint on national television as a kid, and a good deal of stage time since. It is still the one thing I do that has nothing to do with a screen.
+    </p>
+  </div>
+
+  <div class="credentials">
+    <div class="credential" style="--d: 0s">
+      <div class="credential-eyebrow">Classical Training</div>
+      <div class="credential-title">Senior Diploma &mdash; Vocal &amp; Tabla</div>
+      <div class="credential-sub">Gandharva Mahavidyalaya &middot; Prayag Sangeet Samiti</div>
+    </div>
+    <div class="credential" style="--d: .12s">
+      <div class="credential-eyebrow">National Television</div>
+      <div class="credential-title">Indian Idol Junior</div>
+      <div class="credential-sub">Appeared as a child contestant</div>
+    </div>
+    <div class="credential" style="--d: .24s">
+      <div class="credential-eyebrow">Performance</div>
+      <div class="credential-title">Live &amp; Private Events</div>
+      <div class="credential-sub">Solo tabla and accompaniment for classical performers</div>
+    </div>
+  </div>
+
+  <div class="photo-grid">
+    <button class="photo photo-hero" style="--d: 0s"
+            data-title="Accompanying veena" data-sub="Live performance">
+      <img src="music/tabla-accompaniment.jpg" alt="Aaditya Sharma playing tabla, accompanying a veena player" loading="lazy">
+      <div class="photo-caption"><b>Accompanying veena</b><span>Live performance</span></div>
+    </button>
+
+    <div class="photo-row">
+      <button class="photo" style="--d: .14s"
+              data-title="Indian Idol Junior" data-sub="National television">
+        <img src="music/indian-idol-junior.jpg" alt="Aaditya Sharma singing at Indian Idol Junior as a child" loading="lazy">
+        <div class="photo-caption"><b>Indian Idol Junior</b><span>National television</span></div>
+      </button>
+      <button class="photo" style="--d: .26s"
+              data-title="Tabla solo" data-sub="Stage performance">
+        <img src="music/tabla-performance.jpg" alt="Aaditya Sharma performing tabla on stage" loading="lazy">
+        <div class="photo-caption"><b>Tabla solo</b><span>Stage performance</span></div>
+      </button>
+      <button class="photo" style="--d: .38s"
+              data-title="Early years" data-sub="Talent showcase">
+        <img src="music/tabla-stage.jpg" alt="A young Aaditya Sharma playing tabla at a talent showcase" loading="lazy">
+        <div class="photo-caption"><b>Early years</b><span>Talent showcase</span></div>
+      </button>
+    </div>
+  </div>
+</section>
+
 <section id="testimonials">
   <div class="reveal">
     <p class="section-eyebrow">Recommendations</p>
@@ -1016,6 +1210,22 @@
     </div>
   </div>
 </section>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
+  <button class="lb-btn lb-close" id="lbClose" aria-label="Close">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"></path></svg>
+  </button>
+  <button class="lb-btn lb-prev" id="lbPrev" aria-label="Previous photo">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>
+  </button>
+  <button class="lb-btn lb-next" id="lbNext" aria-label="Next photo">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg>
+  </button>
+  <figure>
+    <img id="lbImage" src="" alt="">
+    <figcaption class="lb-caption"><b id="lbTitle"></b><span id="lbSub"></span></figcaption>
+  </figure>
+</div>
 
 <footer>
   <p>© 2026 Aaditya Sharma. Built in Melbourne, VIC.</p>
@@ -1124,8 +1334,84 @@
       }
       
       themeToggleBtn.classList.remove('spin');
-    }, 250); 
+    }, 250);
   });
+
+  /* ─── Music section: staggered reveal + lightbox ─── */
+  (function () {
+    const tiles = Array.from(document.querySelectorAll('#music .photo'));
+    const creds = Array.from(document.querySelectorAll('#music .credential'));
+    if (!tiles.length) return;
+
+    // Opt into the entry animation only once JS is running, so the section
+    // still renders fully if this script never executes.
+    document.querySelectorAll('#music .photo-grid, #music .credentials')
+            .forEach(el => el.classList.add('js-anim'));
+
+    // Reveal on scroll. We observe the *containers*, never the tiles themselves:
+    // a tile starts at clip-path inset(0 0 100%), which gives it zero visible
+    // area, so an observer watching it would report ratio 0 and never fire.
+    // Each child carries its own --d delay, so the stagger stays in CSS.
+    const revealer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target
+             .querySelectorAll(':scope > .photo, :scope > .credential')
+             .forEach(el => el.classList.add('in'));
+        obs.unobserve(entry.target);
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('#music .credentials, #music .photo-grid, #music .photo-row')
+            .forEach(group => revealer.observe(group));
+
+    // Lightbox
+    const box    = document.getElementById('lightbox');
+    const image  = document.getElementById('lbImage');
+    const title  = document.getElementById('lbTitle');
+    const sub    = document.getElementById('lbSub');
+    let current  = 0;
+    let lastFocus = null;
+
+    function show(i) {
+      current = (i + tiles.length) % tiles.length;
+      const tile = tiles[current];
+      const img  = tile.querySelector('img');
+      image.src = img.src;
+      image.alt = img.alt;
+      title.textContent = tile.dataset.title || '';
+      sub.textContent   = tile.dataset.sub || '';
+    }
+
+    function open(i) {
+      lastFocus = document.activeElement;
+      show(i);
+      box.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      document.getElementById('lbClose').focus();
+    }
+
+    function close() {
+      box.classList.remove('open');
+      document.body.style.overflow = '';
+      if (lastFocus) lastFocus.focus();
+    }
+
+    tiles.forEach((tile, i) => tile.addEventListener('click', () => open(i)));
+    document.getElementById('lbClose').addEventListener('click', close);
+    document.getElementById('lbPrev').addEventListener('click', () => show(current - 1));
+    document.getElementById('lbNext').addEventListener('click', () => show(current + 1));
+
+    // Click the backdrop (not the figure) to dismiss
+    box.addEventListener('click', e => { if (e.target === box) close(); });
+
+    document.addEventListener('keydown', e => {
+      if (!box.classList.contains('open')) return;
+      if (e.key === 'Escape')     close();
+      if (e.key === 'ArrowLeft')  show(current - 1);
+      if (e.key === 'ArrowRight') show(current + 1);
+    });
+  })();
 </script>
 
 </body>
