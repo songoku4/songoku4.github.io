@@ -551,6 +551,118 @@
   .photo-caption b { display: block; color: #fff; font-size: .98rem; font-weight: 700; margin-bottom: .15rem; }
   .photo-caption span { color: rgba(255,255,255,.72); font-size: .82rem; }
 
+  /* ─── HOBBIES ─── */
+  .hobby-intro {
+    max-width: 640px; color: var(--text-muted);
+    font-size: 1.05rem; margin-bottom: 4rem;
+  }
+  .hobby-intro strong { color: var(--text-main); font-weight: 700; }
+
+  .hobby-block + .hobby-block { margin-top: 5.5rem; }
+  .hobby-head {
+    display: flex; align-items: baseline; gap: .9rem;
+    flex-wrap: wrap; margin-bottom: 1rem;
+  }
+  .hobby-head h3 {
+    font-size: 1.5rem; font-weight: 800; color: var(--text-main);
+    letter-spacing: -.015em; line-height: 1.2; transition: color .4s ease;
+  }
+  .hobby-tag {
+    font-size: .67rem; font-weight: 800; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--accent);
+  }
+  .hobby-copy {
+    max-width: 600px; color: var(--text-muted);
+    font-size: .98rem; line-height: 1.7; margin-bottom: 2.4rem;
+  }
+  .hobby-copy strong { color: var(--text-main); font-weight: 700; }
+
+  /* Chess — no photos, so a pair of rating cards does the talking */
+  .stat-band {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));
+    gap: 1.25rem; max-width: 760px;   /* capped so the two cards read as a pair */
+  }
+  .stat {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.7rem 1.7rem 1.55rem;
+    transition: opacity .7s ease var(--d, 0s),
+                transform .7s cubic-bezier(.22,1,.36,1) var(--d, 0s),
+                box-shadow .3s ease, background-color .4s ease, border-color .4s ease;
+  }
+  .stat:hover { box-shadow: 0 20px 40px rgba(0,0,0,.05); }
+  .js-anim .stat { opacity: 0; transform: translateY(16px); }
+  .js-anim .stat.in { opacity: 1; transform: none; }
+
+  .stat-head { display: flex; align-items: center; gap: .6rem; margin-bottom: 1.5rem; }
+  .stat-mark {
+    width: 26px; height: 26px; flex-shrink: 0;
+    color: var(--text-main); transition: color .4s ease;
+  }
+  .stat-site {
+    font-size: .95rem; font-weight: 800; letter-spacing: -.01em;
+    color: var(--text-main); transition: color .4s ease;
+  }
+  .stat-format {
+    margin-left: auto; font-size: .61rem; font-weight: 800; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--text-muted);
+    border: 1px solid var(--border); border-radius: 99px; padding: .3rem .62rem;
+    transition: border-color .4s ease, color .4s ease;
+  }
+
+  .stat-num {
+    display: flex; align-items: baseline; gap: .5rem;
+    font-size: clamp(2.5rem, 5vw, 3.2rem); font-weight: 800;
+    color: var(--text-main); line-height: .9; letter-spacing: -.04em;
+    font-variant-numeric: tabular-nums; transition: color .4s ease;
+  }
+  .stat-num span {
+    font-size: .23em; font-weight: 800; letter-spacing: .13em;
+    text-transform: uppercase; color: var(--accent);
+  }
+
+  .meter { margin-top: 1.4rem; }
+  .meter-track {
+    height: 5px; border-radius: 99px; background: var(--bg2);
+    overflow: hidden; transition: background-color .4s ease;
+  }
+  .meter-fill {
+    height: 100%; border-radius: 99px; background: var(--accent);
+    width: var(--pct);
+    transition: width 1.5s cubic-bezier(.22,1,.36,1) calc(var(--d, 0s) + .3s);
+  }
+  /* Entry state opt-in, so the bar reads as filled without JS */
+  .js-anim .meter-fill { width: 0; }
+  .js-anim .stat.in .meter-fill { width: var(--pct); }
+  .meter-scale {
+    display: flex; justify-content: space-between; margin-top: .5rem;
+    font-size: .67rem; font-weight: 700; letter-spacing: .05em;
+    color: var(--text-muted); font-variant-numeric: tabular-nums;
+  }
+  .stat-sub { margin-top: 1.1rem; font-size: .81rem; color: var(--text-muted); line-height: 1.5; }
+
+  .chess-quip {
+    display: flex; align-items: baseline; gap: .55rem;
+    margin-top: 1.6rem; font-size: .88rem; color: var(--text-muted);
+  }
+  .chess-quip b {
+    color: var(--text-main); font-weight: 800;
+    font-variant-numeric: tabular-nums; transition: color .4s ease;
+  }
+
+  /* Cooking — offset two-column spread, second column dropped */
+  .cook-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; align-items: start; }
+  .cook-col  { display: grid; gap: 1.1rem; }
+  .cook-col:last-child { margin-top: 3.5rem; }
+  .cook-grid .tall   { aspect-ratio: 4 / 5; }
+  .cook-grid .wide   { aspect-ratio: 5 / 4; }
+  .cook-grid .boxy   { aspect-ratio: 1 / 1; }
+
+  /* Ice — a descending cascade, like a glide across the rink */
+  .ice-strip { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 1.1rem; align-items: start; }
+  .ice-strip .photo { aspect-ratio: 4 / 5; }
+  .ice-strip .photo:nth-child(2) { margin-top: 3rem; }
+  .ice-strip .photo:nth-child(3) { margin-top: 5.5rem; }
+
   /* ─── LIGHTBOX ─── */
   .lightbox {
     position: fixed; inset: 0; z-index: 200;
@@ -588,10 +700,10 @@
   .lb-close { top: 1.75rem; right: 1.75rem; }
 
   @media (prefers-reduced-motion: reduce) {
-    .photo, .photo img, .credential, .lightbox, .lightbox img { transition-duration: .01ms !important; }
+    .photo, .photo img, .credential, .stat, .lightbox, .lightbox img { transition-duration: .01ms !important; }
     .js-anim .photo { clip-path: none; }
     .js-anim .photo img, .photo:hover img { transform: none; }
-    .js-anim .credential { opacity: 1; transform: none; }
+    .js-anim .credential, .js-anim .stat { opacity: 1; transform: none; }
   }
 
   /* ─── FOOTER ─── */
@@ -618,12 +730,24 @@
     .lb-prev { left: .6rem; }
     .lb-next { right: .6rem; }
     .lb-close { top: 1rem; right: 1rem; }
+    /* Three portraits get narrow here — ease the cascade so they stay aligned enough to read. */
+    .ice-strip { grid-template-columns: repeat(3, 1fr); }
+    .ice-strip .photo:nth-child(2) { margin-top: 1.4rem; }
+    .ice-strip .photo:nth-child(3) { margin-top: 2.8rem; }
+    .hobby-block + .hobby-block { margin-top: 4rem; }
   }
 
   @media (max-width: 640px) {
     /* Stack, but keep the 3:4 frame — a landscape crop decapitates the
        portrait shots at this width. */
     .photo-row { grid-template-columns: 1fr; }
+    /* The offset and the cascade are decoration; at one column they'd just
+       be stray gaps. */
+    .cook-grid { grid-template-columns: 1fr; }
+    .cook-col:last-child { margin-top: 0; }
+    .ice-strip { grid-template-columns: 1fr; }
+    .ice-strip .photo:nth-child(2),
+    .ice-strip .photo:nth-child(3) { margin-top: 0; }
   }
 </style>
 </head>
@@ -647,6 +771,7 @@
         <li><a href="#mentorship">Mentorship</a></li>
         <li><a href="#education">Education</a></li>
         <li><a href="#music">Music</a></li>
+        <li><a href="#hobbies">Hobbies</a></li>
         <li><a href="#testimonials">Testimonials</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
@@ -863,7 +988,7 @@
         <div class="timeline-item">
           <div class="timeline-item-header">
             <div class="timeline-role">Device Configuration Technician</div>
-            <div class="timeline-date-badge">Jul 2026 - Aug 2026</div>
+            <div class="timeline-date-badge">Jul 2026 - Sep 2026</div>
           </div>
           <ul class="timeline-list">
             <li>Configured and commissioned <strong>personal duress and lone-worker safety devices</strong> ahead of client deployment, working through detailed technical procedures with a high standard of accuracy.</li>
@@ -1109,7 +1234,7 @@
     </p>
   </div>
 
-  <div class="credentials">
+  <div class="credentials anim-group">
     <div class="credential" style="--d: 0s">
       <div class="credential-eyebrow">Classical Training</div>
       <div class="credential-title">Senior Diploma &mdash; Vocal &amp; Tabla</div>
@@ -1127,14 +1252,14 @@
     </div>
   </div>
 
-  <div class="photo-grid">
+  <div class="photo-grid anim-group">
     <button class="photo photo-hero" style="--d: 0s"
             data-title="Accompanying veena" data-sub="Live performance">
       <img src="music/tabla-accompaniment.jpg" alt="Aaditya Sharma playing tabla, accompanying a veena player" loading="lazy">
       <div class="photo-caption"><b>Accompanying veena</b><span>Live performance</span></div>
     </button>
 
-    <div class="photo-row">
+    <div class="photo-row anim-group">
       <button class="photo" style="--d: .14s"
               data-title="Indian Idol Junior" data-sub="National television">
         <img src="music/indian-idol-junior.jpg" alt="Aaditya Sharma singing at Indian Idol Junior as a child" loading="lazy">
@@ -1152,6 +1277,153 @@
       </button>
     </div>
   </div>
+</section>
+
+<section id="hobbies">
+  <div class="reveal">
+    <p class="section-eyebrow">Off the Clock</p>
+    <h2 class="section-title">A board, a stove, and a sheet of ice.</h2>
+    <p class="hobby-intro">
+      Outside work there are a few things I keep coming back to. None of them are
+      productive, which is rather the point &mdash; though two of them do reward the
+      same thing engineering does: <strong>doing it badly for long enough to get good at it</strong>.
+    </p>
+  </div>
+
+  <!-- ─────────── CHESS ─────────── -->
+  <div class="hobby-block">
+    <div class="reveal">
+      <div class="hobby-head">
+        <h3>Chess</h3>
+        <span class="hobby-tag">Online &middot; Bullet &amp; Blitz</span>
+      </div>
+      <p class="hobby-copy">
+        Almost entirely online, and almost entirely at fast time controls. Bullet is
+        where I am strongest &mdash; a one-minute clock removes the option of
+        overthinking, which turns out to be the hard part of the game for me.
+      </p>
+    </div>
+
+    <div class="stat-band anim-group">
+      <!-- Scale runs 1000–2500, so --pct = (rating − 1000) / 1500 -->
+      <div class="stat" style="--d: 0s; --pct: 86.7%">
+        <div class="stat-head">
+          <svg class="stat-mark" viewBox="0 0 48 48" fill="currentColor" aria-hidden="true">
+            <path d="M19 4c-.6 2.2-.3 3.9.6 5.3l-4.4 2.9c-3.4 2.3-5.6 5.4-6.8 9.2l-2.2 7c-.5 1.6.4 3.2 2 3.6 1.1.3 2.2-.1 3-.9l3.6-4 2.6 1.2-1.9 3.4c-1.4 2.5-2.1 5.2-2.1 8v3.8h22V22.5c0-7.4-4.3-13.9-10.9-16.9L19 4z"/>
+            <path d="M10 44h28v3H10z"/>
+          </svg>
+          <span class="stat-site">Lichess</span>
+          <span class="stat-format">Bullet</span>
+        </div>
+        <div class="stat-num">2300<span>peak</span></div>
+        <div class="meter">
+          <div class="meter-track"><div class="meter-fill"></div></div>
+          <div class="meter-scale"><span>1000</span><span>2500</span></div>
+        </div>
+        <p class="stat-sub">Currently hovering around 2100.</p>
+      </div>
+
+      <div class="stat" style="--d: .12s; --pct: 66.7%">
+        <div class="stat-head">
+          <svg class="stat-mark" viewBox="0 0 48 48" fill="currentColor" aria-hidden="true">
+            <path d="M24 5a7 7 0 0 1 4.3 12.5c2.4 1.6 4 4.1 4.5 7l.4 2.5H14.8l.4-2.5c.5-2.9 2.1-5.4 4.5-7A7 7 0 0 1 24 5z"/>
+            <path d="M14 29h20l1.6 9H12.4z"/>
+            <path d="M9 40h30v4H9z"/>
+          </svg>
+          <span class="stat-site">Chess.com</span>
+          <span class="stat-format">Blitz</span>
+        </div>
+        <div class="stat-num">2000<span>peak</span></div>
+        <div class="meter">
+          <div class="meter-track"><div class="meter-fill"></div></div>
+          <div class="meter-scale"><span>1000</span><span>2500</span></div>
+        </div>
+        <p class="stat-sub">Same formats, slightly tougher pool.</p>
+      </div>
+    </div>
+
+    <p class="chess-quip"><b>1. d4</b> &mdash; and I will not be taking questions on this.</p>
+    <!-- To link a profile later, wrap a .stat in <a href="..." style="text-decoration:none"> -->
+  </div>
+
+  <!-- ─────────── COOKING ─────────── -->
+  <div class="hobby-block">
+    <div class="reveal">
+      <div class="hobby-head">
+        <h3>Cooking</h3>
+        <span class="hobby-tag">Mostly pasta, mostly improvised</span>
+      </div>
+      <p class="hobby-copy">
+        Moving countries made this one non-negotiable, and it stuck. Dinner is the only
+        part of my day with a <strong>guaranteed result in under an hour</strong>, which
+        is a feeling software rarely offers. Everything here was cooked and plated in a
+        Melbourne apartment kitchen.
+      </p>
+    </div>
+
+    <div class="cook-grid">
+      <div class="cook-col anim-group">
+        <button class="photo tall" style="--d: 0s"
+                data-title="Fusilli al pomodoro" data-sub="Balcony, Melbourne CBD">
+          <img src="cooking/fusilli-view.jpg" alt="A bowl of creamy tomato fusilli held up against a Melbourne city view" loading="lazy">
+          <div class="photo-caption"><b>Fusilli al pomodoro</b><span>Balcony, Melbourne CBD</span></div>
+        </button>
+        <button class="photo wide" style="--d: .14s"
+                data-title="Creamy penne with vegetables" data-sub="One pan, no leftovers">
+          <img src="cooking/penne-bowl.jpg" alt="A bowl of creamy penne with carrots, peas and green beans, topped with chilli flakes and herbs" loading="lazy">
+          <div class="photo-caption"><b>Creamy penne</b><span>One pan, no leftovers</span></div>
+        </button>
+      </div>
+
+      <div class="cook-col anim-group">
+        <button class="photo wide" style="--d: .08s"
+                data-title="Spaghetti, pan to plate" data-sub="Weeknight staple">
+          <img src="cooking/spaghetti.jpg" alt="A pan of spaghetti garnished with cherry tomatoes and dried herbs" loading="lazy">
+          <div class="photo-caption"><b>Spaghetti, pan to plate</b><span>Weeknight staple</span></div>
+        </button>
+        <button class="photo boxy" style="--d: .22s"
+                data-title="Rajma with yoghurt" data-sub="The one from home">
+          <img src="cooking/rajma-bowl.jpg" alt="A bowl of rajma — kidney bean curry — topped with yoghurt and cumin, ringed with carrot slices" loading="lazy">
+          <div class="photo-caption"><b>Rajma with yoghurt</b><span>The one from home</span></div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─────────── ICE SKATING ─────────── -->
+  <div class="hobby-block">
+    <div class="reveal">
+      <div class="hobby-head">
+        <h3>Ice Skating</h3>
+        <span class="hobby-tag">O'Brien Icehouse &middot; Docklands</span>
+      </div>
+      <p class="hobby-copy">
+        Newer than the rest, and comfortably the one I am worst at. Growing up in India
+        there was never a rink to fall over in, so this is being learned from zero at
+        twenty-five &mdash; which is its own kind of fun.
+      </p>
+    </div>
+
+    <div class="ice-strip anim-group">
+      <button class="photo" style="--d: 0s"
+              data-title="Rink day out" data-sub="O'Brien Icehouse, Docklands">
+        <img src="skating/icehouse-duo.jpg" alt="Aaditya Sharma and a friend standing on the ice at O'Brien Icehouse" loading="lazy">
+        <div class="photo-caption"><b>Rink day out</b><span>O'Brien Icehouse, Docklands</span></div>
+      </button>
+      <button class="photo" style="--d: .14s"
+              data-title="Finding the edges" data-sub="O'Brien Icehouse">
+        <img src="skating/icehouse-solo.jpg" alt="Aaditya Sharma standing on the ice in skates at O'Brien Icehouse" loading="lazy">
+        <div class="photo-caption"><b>Finding the edges</b><span>O'Brien Icehouse</span></div>
+      </button>
+      <button class="photo" style="--d: .26s"
+              data-title="Centre ice" data-sub="O'Brien Icehouse">
+        <img src="skating/icehouse-solo-wide.jpg" alt="Aaditya Sharma on the rink with skaters in the background at O'Brien Icehouse" loading="lazy">
+        <div class="photo-caption"><b>Centre ice</b><span>O'Brien Icehouse</span></div>
+      </button>
+    </div>
+  </div>
+
+  <!-- Bouldering and writing go here as further .hobby-block entries -->
 </section>
 
 <section id="testimonials">
@@ -1337,16 +1609,17 @@
     }, 250);
   });
 
-  /* ─── Music section: staggered reveal + lightbox ─── */
+  /* ─── Music + Hobbies: staggered reveal + shared lightbox ─── */
   (function () {
-    const tiles = Array.from(document.querySelectorAll('#music .photo'));
-    const creds = Array.from(document.querySelectorAll('#music .credential'));
+    // One gallery spanning both sections, in DOM order, so the lightbox
+    // arrows walk through every photo on the page.
+    const tiles = Array.from(document.querySelectorAll('#music .photo, #hobbies .photo'));
     if (!tiles.length) return;
 
-    // Opt into the entry animation only once JS is running, so the section
-    // still renders fully if this script never executes.
-    document.querySelectorAll('#music .photo-grid, #music .credentials')
-            .forEach(el => el.classList.add('js-anim'));
+    // Opt into the entry animation only once JS is running, so the sections
+    // still render fully if this script never executes.
+    const groups = Array.from(document.querySelectorAll('.anim-group'));
+    groups.forEach(el => el.classList.add('js-anim'));
 
     // Reveal on scroll. We observe the *containers*, never the tiles themselves:
     // a tile starts at clip-path inset(0 0 100%), which gives it zero visible
@@ -1356,14 +1629,13 @@
       entries.forEach(entry => {
         if (!entry.isIntersecting) return;
         entry.target
-             .querySelectorAll(':scope > .photo, :scope > .credential')
+             .querySelectorAll(':scope > .photo, :scope > .credential, :scope > .stat')
              .forEach(el => el.classList.add('in'));
         obs.unobserve(entry.target);
       });
     }, { threshold: 0.12 });
 
-    document.querySelectorAll('#music .credentials, #music .photo-grid, #music .photo-row')
-            .forEach(group => revealer.observe(group));
+    groups.forEach(group => revealer.observe(group));
 
     // Lightbox
     const box    = document.getElementById('lightbox');
