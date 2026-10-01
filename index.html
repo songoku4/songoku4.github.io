@@ -577,7 +577,7 @@
   }
   .hobby-copy strong { color: var(--text-main); font-weight: 700; }
 
-  /* Chess — no photos, so a pair of rating cards does the talking */
+  /* Chess: no photos, so a pair of rating cards does the talking */
   .stat-band {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));
     gap: 1.25rem; max-width: 760px;   /* capped so the two cards read as a pair */
@@ -649,7 +649,7 @@
     font-variant-numeric: tabular-nums; transition: color .4s ease;
   }
 
-  /* Cooking — offset two-column spread, second column dropped */
+  /* Cooking: offset two-column spread, second column dropped */
   .cook-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; align-items: start; }
   .cook-col  { display: grid; gap: 1.1rem; }
   .cook-col:last-child { margin-top: 3.5rem; }
@@ -657,7 +657,7 @@
   .cook-grid .wide   { aspect-ratio: 5 / 4; }
   .cook-grid .boxy   { aspect-ratio: 1 / 1; }
 
-  /* Ice — a descending cascade, like a glide across the rink */
+  /* Ice: a descending cascade, like a glide across the rink */
   .ice-strip { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 1.1rem; align-items: start; }
   .ice-strip .photo { aspect-ratio: 4 / 5; }
   .ice-strip .photo:nth-child(2) { margin-top: 3rem; }
@@ -730,7 +730,7 @@
     .lb-prev { left: .6rem; }
     .lb-next { right: .6rem; }
     .lb-close { top: 1rem; right: 1rem; }
-    /* Three portraits get narrow here — ease the cascade so they stay aligned enough to read. */
+    /* Three portraits get narrow here, so ease the cascade to keep them aligned enough to read. */
     .ice-strip { grid-template-columns: repeat(3, 1fr); }
     .ice-strip .photo:nth-child(2) { margin-top: 1.4rem; }
     .ice-strip .photo:nth-child(3) { margin-top: 2.8rem; }
@@ -738,7 +738,7 @@
   }
 
   @media (max-width: 640px) {
-    /* Stack, but keep the 3:4 frame — a landscape crop decapitates the
+    /* Stack, but keep the 3:4 frame, since a landscape crop decapitates the
        portrait shots at this width. */
     .photo-row { grid-template-columns: 1fr; }
     /* The offset and the cascade are decoration; at one column they'd just
@@ -1230,14 +1230,14 @@
     <p class="section-eyebrow">Beyond Engineering</p>
     <h2 class="section-title">I have been playing tabla longer than I have been writing code.</h2>
     <p class="music-intro">
-      Long before any of the above, I was training in Hindustani classical music &mdash; <strong>tabla and vocal</strong>, through years of graded exams up to Senior Diploma. There was a stint on national television as a kid, and a good deal of stage time since. It is still the one thing I do that has nothing to do with a screen.
+      Long before any of the above, I was training in Hindustani classical music, <strong>tabla and vocal</strong>, through years of graded exams up to Senior Diploma. There was a stint on national television as a kid, and a good deal of stage time since. It is still the one thing I do that has nothing to do with a screen.
     </p>
   </div>
 
   <div class="credentials anim-group">
     <div class="credential" style="--d: 0s">
       <div class="credential-eyebrow">Classical Training</div>
-      <div class="credential-title">Senior Diploma &mdash; Vocal &amp; Tabla</div>
+      <div class="credential-title">Senior Diploma in Vocal &amp; Tabla</div>
       <div class="credential-sub">Gandharva Mahavidyalaya &middot; Prayag Sangeet Samiti</div>
     </div>
     <div class="credential" style="--d: .12s">
@@ -1285,7 +1285,7 @@
     <h2 class="section-title">A board, a stove, and a sheet of ice.</h2>
     <p class="hobby-intro">
       Outside work there are a few things I keep coming back to. None of them are
-      productive, which is rather the point &mdash; though two of them do reward the
+      productive, which is rather the point, though two of them do reward the
       same thing engineering does: <strong>doing it badly for long enough to get good at it</strong>.
     </p>
   </div>
@@ -1299,13 +1299,13 @@
       </div>
       <p class="hobby-copy">
         Almost entirely online, and almost entirely at fast time controls. Bullet is
-        where I am strongest &mdash; a one-minute clock removes the option of
+        where I am strongest. A one-minute clock removes the option of
         overthinking, which turns out to be the hard part of the game for me.
       </p>
     </div>
 
     <div class="stat-band anim-group">
-      <!-- Scale runs 1000–2500, so --pct = (rating − 1000) / 1500 -->
+      <!-- Scale runs 1000 to 2500, so --pct = (rating - 1000) / 1500 -->
       <div class="stat" style="--d: 0s; --pct: 86.7%">
         <div class="stat-head">
           <svg class="stat-mark" viewBox="0 0 48 48" fill="currentColor" aria-hidden="true">
@@ -1342,7 +1342,7 @@
       </div>
     </div>
 
-    <p class="chess-quip"><b>1. d4</b> &mdash; and I will not be taking questions on this.</p>
+    <p class="chess-quip"><b>1. d4</b> and I will not be taking questions on this.</p>
     <!-- To link a profile later, wrap a .stat in <a href="..." style="text-decoration:none"> -->
   </div>
 
@@ -1383,7 +1383,7 @@
         </button>
         <button class="photo boxy" style="--d: .22s"
                 data-title="Rajma with yoghurt" data-sub="The one from home">
-          <img src="cooking/rajma-bowl.jpg" alt="A bowl of rajma — kidney bean curry — topped with yoghurt and cumin, ringed with carrot slices" loading="lazy">
+          <img src="cooking/rajma-bowl.jpg" alt="A bowl of rajma, a kidney bean curry, topped with yoghurt and cumin and ringed with carrot slices" loading="lazy">
           <div class="photo-caption"><b>Rajma with yoghurt</b><span>The one from home</span></div>
         </button>
       </div>
@@ -1400,7 +1400,7 @@
       <p class="hobby-copy">
         Newer than the rest, and comfortably the one I am worst at. Growing up in India
         there was never a rink to fall over in, so this is being learned from zero at
-        twenty-five &mdash; which is its own kind of fun.
+        twenty-five, which is its own kind of fun.
       </p>
     </div>
 
