@@ -117,7 +117,9 @@
     top: -40vh; right: -20vw;
     width: 140vw; height: 140vh;
     /* Soft golden yellow rays */
-    background: radial-gradient(circle at 65% 35%, rgba(250, 218, 71, 0.35) 0%, rgba(250, 204, 21, 0.12) 40%, transparent 75%);
+    /* Ambient tint only. The defined light now comes from .sun-core and .sun-rays,
+       so this sits well back; at its old 0.35 it flooded the rays flat. */
+    background: radial-gradient(circle at 65% 35%, rgba(250, 218, 71, 0.13) 0%, rgba(250, 204, 21, 0.05) 40%, transparent 75%);
     opacity: 0;
     transition: opacity 1.5s ease-in-out;
   }
@@ -128,6 +130,96 @@
   @keyframes sunSway {
     0% { transform: translate(0, 0) scale(1); }
     100% { transform: translate(-3%, 3%) scale(1.05); }
+  }
+
+  /* ── Sunshine from the top-right: core, rays, drifting motes ──
+     Everything below is light-mode only and animates transform/opacity
+     exclusively, so it stays on the compositor and off the main thread. */
+
+  /* The source itself: a warm hotspot sitting just off the corner. */
+  .sun-core {
+    position: absolute; top: 0; right: 0;
+    width: 58vmax; height: 58vmax;
+    transform: translate(38%, -42%);
+    background: radial-gradient(circle at 50% 50%,
+        rgba(255, 246, 212, .50)  0%,
+        rgba(255, 231, 150, .22) 24%,
+        rgba(250, 204,  21, .07) 46%,
+        transparent 68%);
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+  }
+  body:not(.dark-theme) .sun-core {
+    opacity: 1;
+    animation: sunBreathe 9s ease-in-out infinite alternate;
+  }
+  @keyframes sunBreathe {
+    from { transform: translate(38%, -42%) scale(1);    }
+    to   { transform: translate(38%, -42%) scale(1.06); }
+  }
+
+  /* Beams fanning out of that same corner. The mask is static and only the
+     inner element turns, so the fade stays pinned to the corner. */
+  .sun-rays {
+    position: absolute; top: 0; right: 0;
+    width: 150vmax; height: 150vmax;
+    transform: translate(50%, -50%);
+    -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 2%, rgba(0,0,0,.8) 13%, rgba(0,0,0,.3) 30%, transparent 50%);
+            mask-image: radial-gradient(circle at 50% 50%, #000 2%, rgba(0,0,0,.8) 13%, rgba(0,0,0,.3) 30%, transparent 50%);
+    opacity: 0;
+    transition: opacity 2s ease-in-out;
+  }
+  body:not(.dark-theme) .sun-rays {
+    opacity: 1;
+    animation: rayGlow 11s ease-in-out infinite alternate;
+  }
+  .sun-rays i {
+    position: absolute; inset: 0; display: block;
+    background: repeating-conic-gradient(from 0deg at 50% 50%,
+        rgba(253, 216,  95, .26)  0deg,  rgba(253, 216,  95, .26)  3.2deg,
+        transparent               3.2deg, transparent             11deg,
+        rgba(255, 233, 150, .16) 11deg,  rgba(255, 233, 150, .16) 13deg,
+        transparent              13deg,  transparent              24deg);
+    animation: raySway 24s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+  @keyframes raySway { from { transform: rotate(-6deg); } to { transform: rotate(6deg); } }
+  @keyframes rayGlow { from { opacity: .72; } to { opacity: 1; } }
+
+  /* Dust rising through the light. One tile height per cycle, so it loops seamlessly. */
+  .sun-motes {
+    position: absolute; top: 0; right: 0;
+    width: 115vmax; height: 115vmax;
+    transform: translate(44%, -44%);
+    overflow: hidden;
+    -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 0%, rgba(0,0,0,.55) 30%, transparent 60%);
+            mask-image: radial-gradient(circle at 50% 50%, #000 0%, rgba(0,0,0,.55) 30%, transparent 60%);
+    opacity: 0;
+    transition: opacity 2s ease;
+  }
+  body:not(.dark-theme) .sun-motes { opacity: .9; }
+  .sun-motes i {
+    position: absolute; inset: -20%; display: block;
+    background-image:
+      radial-gradient(circle, rgba(255, 242, 186, .85) 0 1.3px, transparent 1.7px),
+      radial-gradient(circle, rgba(255, 226, 142, .5)  0 1px,   transparent 1.4px);
+    background-size: 190px 190px;
+    background-position: 0 0, 95px 60px;
+    animation: moteRise 26s linear infinite;
+    will-change: transform;
+  }
+  @keyframes moteRise {
+    from { transform: translate3d(0, 0, 0); }
+    to   { transform: translate3d(0, -190px, 0); }
+  }
+
+  /* Phones: keep the glow, drop the moving parts. */
+  @media (max-width: 700px) {
+    .sun-motes { display: none; }
+    body:not(.dark-theme) .sun-rays { animation: none; opacity: .5; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sun-core, .sun-rays, .sun-rays i, .sun-motes i { animation: none !important; }
   }
 
   /* The Rain Effect */
@@ -755,6 +847,9 @@
 
 <div class="weather-layer">
   <div class="sunlight"></div>
+  <div class="sun-core"></div>
+  <div class="sun-rays"><i></i></div>
+  <div class="sun-motes"><i></i></div>
   <div class="rain"></div>
   <div class="lightning"></div>
 </div>
