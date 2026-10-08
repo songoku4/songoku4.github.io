@@ -561,6 +561,90 @@
   .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
   .reveal.visible { opacity: 1; transform: none; }
 
+  /* ─── AWARDS & CERTIFICATIONS ─── */
+  .awards-intro {
+    max-width: 640px; color: var(--text-muted);
+    font-size: 1.05rem; margin-bottom: 3.5rem;
+  }
+  .awards-intro strong { color: var(--text-main); font-weight: 700; }
+
+  /* auto-fill rather than auto-fit: a lone card keeps its column width
+     instead of stretching the full page, so the grid reads the same
+     whether there are two credentials here or twelve. */
+  .award-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .award-card {
+    /* stretch, not flex-start: the body must fill the card's height for the
+       verify link's margin-top:auto to reach the floor. The badge keeps its
+       own explicit height, so it still sits at the top. */
+    display: flex; gap: 1.35rem; align-items: stretch;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    transition: opacity .7s ease var(--d, 0s),
+                transform .7s cubic-bezier(.22,1,.36,1) var(--d, 0s),
+                box-shadow .3s ease, background-color .4s ease, border-color .4s ease;
+  }
+  .award-card:hover { box-shadow: 0 20px 40px rgba(0,0,0,.05); }
+  /* Entry state is applied by script, so the content still shows without JS */
+  .js-anim .award-card { opacity: 0; transform: translateY(16px); }
+  .js-anim .award-card.in { opacity: 1; transform: none; }
+
+  .award-badge {
+    width: 76px; height: 76px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .award-badge img { width: 100%; height: 100%; object-fit: contain; display: block; }
+
+  /* Fallback for credentials that ship no badge artwork */
+  .award-badge.is-mark {
+    border-radius: var(--radius);
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    color: var(--accent);
+    transition: background-color .4s ease, border-color .4s ease;
+  }
+  .award-badge.is-mark svg { width: 30px; height: 30px; }
+
+  /* Column + flex:1 so the verify link can be pushed to the card floor,
+     which keeps those links on one baseline across a row of uneven copy. */
+  .award-body { min-width: 0; flex: 1; display: flex; flex-direction: column; }
+  .award-eyebrow {
+    display: flex; align-items: center; gap: 7px;
+    font-size: .68rem; letter-spacing: .14em; text-transform: uppercase;
+    font-weight: 800; color: var(--accent); margin-bottom: .6rem;
+  }
+  .award-eyebrow::before {
+    content: ''; width: 5px; height: 5px; border-radius: 50%;
+    background: var(--accent); flex-shrink: 0;
+  }
+  .award-title {
+    font-size: 1.1rem; font-weight: 800; color: var(--text-main);
+    line-height: 1.35; margin-bottom: .3rem; transition: color .4s ease;
+  }
+  .award-meta { font-size: .88rem; color: var(--text-muted); line-height: 1.5; }
+  .award-desc {
+    font-size: .9rem; color: var(--text-muted);
+    line-height: 1.65; margin-top: .8rem;
+  }
+  .award-verify {
+    display: inline-flex; align-items: center; gap: 6px;
+    align-self: flex-start;
+    margin-top: auto; padding-top: 1.2rem;
+    font-size: .7rem; font-weight: 800;
+    letter-spacing: .12em; text-transform: uppercase;
+    color: var(--text-main); text-decoration: none;
+    border-bottom: 1px solid var(--border); padding-bottom: 3px;
+    transition: color .3s ease, border-color .3s ease, gap .3s ease;
+  }
+  .award-verify:hover, .award-verify:focus-visible { color: var(--accent); border-color: var(--accent); gap: 10px; }
+  .award-verify svg { width: 12px; height: 12px; flex-shrink: 0; }
+
   /* ─── MUSIC ─── */
   .music-intro {
     max-width: 640px; color: var(--text-muted);
@@ -792,10 +876,10 @@
   .lb-close { top: 1.75rem; right: 1.75rem; }
 
   @media (prefers-reduced-motion: reduce) {
-    .photo, .photo img, .credential, .stat, .lightbox, .lightbox img { transition-duration: .01ms !important; }
+    .photo, .photo img, .credential, .stat, .award-card, .lightbox, .lightbox img { transition-duration: .01ms !important; }
     .js-anim .photo { clip-path: none; }
     .js-anim .photo img, .photo:hover img { transform: none; }
-    .js-anim .credential, .js-anim .stat { opacity: 1; transform: none; }
+    .js-anim .credential, .js-anim .stat, .js-anim .award-card { opacity: 1; transform: none; }
   }
 
   /* ─── FOOTER ─── */
@@ -818,6 +902,8 @@
     .credential { padding: 1.5rem 0; }
     .credential + .credential { padding-left: 0; border-top: 1px solid var(--border); }
     .credential + .credential::before { display: none; }
+    .award-grid { grid-template-columns: 1fr; }
+    .award-card { padding: 1.5rem; gap: 1.1rem; }
     .lightbox { padding: 4.5rem 1rem; }
     .lb-prev { left: .6rem; }
     .lb-next { right: .6rem; }
@@ -840,6 +926,8 @@
     .ice-strip { grid-template-columns: 1fr; }
     .ice-strip .photo:nth-child(2),
     .ice-strip .photo:nth-child(3) { margin-top: 0; }
+    /* Side-by-side badge and text gets cramped here, so stack them. */
+    .award-card { flex-direction: column; gap: 1rem; }
   }
 </style>
 </head>
@@ -865,6 +953,7 @@
         <li><a href="#projects">Projects</a></li>
         <li><a href="#mentorship">Mentorship</a></li>
         <li><a href="#education">Education</a></li>
+        <li><a href="#awards">Awards</a></li>
         <li><a href="#music">Music</a></li>
         <li><a href="#hobbies">Hobbies</a></li>
         <li><a href="#testimonials">Testimonials</a></li>
@@ -1320,6 +1409,92 @@
   </div>
 </section>
 
+<section id="awards">
+  <div class="reveal">
+    <p class="section-eyebrow">Recognition</p>
+    <h2 class="section-title">Awards &amp; Certifications</h2>
+    <p class="awards-intro">
+      Verified credentials and recognition earned alongside the engineering work. Every badge
+      below links to its <strong>issuer-hosted verification page</strong>, so the claim can be
+      checked independently rather than taken on trust.
+    </p>
+
+    <div class="award-grid anim-group">
+
+      <!-- ── Melbourne Plus: Innovation ── -->
+      <article class="award-card" style="--d: 0s">
+        <div class="award-badge">
+          <img src="https://badges.parchment.au/public/assertions/Q3vBAHBkQFGjxcuJswZZ_Q/image"
+               alt="Melbourne Plus: Innovation digital badge" loading="lazy" width="76" height="76">
+        </div>
+        <div class="award-body">
+          <div class="award-eyebrow">University of Melbourne</div>
+          <h3 class="award-title">Melbourne Plus: Innovation</h3>
+          <div class="award-meta">Awarded October 2026</div>
+          <p class="award-desc">
+            Recognises demonstrated capability in creating new or distinctive solutions, spotting
+            emerging patterns, and applying lateral thinking to unfamiliar problems.
+          </p>
+          <a class="award-verify"
+             href="https://badges.parchment.au/public/assertions/Q3vBAHBkQFGjxcuJswZZ_Q"
+             target="_blank" rel="noopener noreferrer">
+            Verify credential
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M7 17 17 7"></path><path d="M7 7h10v10"></path>
+            </svg>
+          </a>
+        </div>
+      </article>
+
+      <!--
+        ── HOW TO ADD ANOTHER ──────────────────────────────────────────────
+        Copy one block below, fill it in, and bump the --d delay by .12s each
+        time so the cards stagger in (0s, .12s, .24s, .36s ...).
+
+        WITH badge artwork (Badgr / Credly / Parchment):
+          Paste the badge image URL into <img src="">. Grab it from the badge's
+          public page, or download the PNG next to unimelb.jpg and use a local
+          filename instead, which is more reliable long term.
+
+        WITHOUT badge artwork: swap the <div class="award-badge"> for the
+        is-mark version shown in the commented block underneath.
+
+      <article class="award-card" style="--d: .12s">
+        <div class="award-badge">
+          <img src="BADGE_IMAGE_URL" alt="CREDENTIAL NAME badge" loading="lazy" width="76" height="76">
+        </div>
+        <div class="award-body">
+          <div class="award-eyebrow">ISSUING BODY</div>
+          <h3 class="award-title">CREDENTIAL NAME</h3>
+          <div class="award-meta">Awarded MONTH YEAR</div>
+          <p class="award-desc">One or two lines on what it recognises.</p>
+          <a class="award-verify" href="VERIFY_URL" target="_blank" rel="noopener noreferrer">
+            Verify credential
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M7 17 17 7"></path><path d="M7 7h10v10"></path>
+            </svg>
+          </a>
+        </div>
+      </article>
+
+        No-artwork variant: replace the badge div above with this one.
+
+        <div class="award-badge is-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="8" r="6"></circle>
+            <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path>
+          </svg>
+        </div>
+
+        If a credential has no public verification page, delete the whole
+        <a class="award-verify"> block rather than linking somewhere weak.
+        ─────────────────────────────────────────────────────────────────────
+      -->
+
+    </div>
+  </div>
+</section>
+
 <section id="music">
   <div class="reveal">
     <p class="section-eyebrow">Beyond Engineering</p>
@@ -1724,7 +1899,7 @@
       entries.forEach(entry => {
         if (!entry.isIntersecting) return;
         entry.target
-             .querySelectorAll(':scope > .photo, :scope > .credential, :scope > .stat')
+             .querySelectorAll(':scope > .photo, :scope > .credential, :scope > .stat, :scope > .award-card')
              .forEach(el => el.classList.add('in'));
         obs.unobserve(entry.target);
       });
